@@ -1,0 +1,28 @@
+{% extends 'base.html' %}
+
+
+{% block content %}
+
+{% for v in vacancies %}
+
+<div class="card border-secondary col-md-8 mx-auto text-center my-3">
+    <div class="card-header text-white bg-dark">
+        <h5>{{ v.title}}</h5>
+    </div>
+    <div class="card-body text-dark bg-light">
+        <p><b>{{ v.company }}</b></p>
+        <p><small class="text-muted">{{ v.city }}</small></p>
+        <p>{{ v.description }}</p>
+        <a href="{{ v.url }}" class="btn btn-info">Go to site</a>
+    </div>
+    <div class="card-footer text-white bg-secondary">
+        <small>{{ v.timestamp|date:"d-m-Y" }}</small>
+    </div>
+  </div>
+
+    
+
+
+
+    {% endfor %}
+{% endblock content %}

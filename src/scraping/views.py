@@ -1,3 +1,10 @@
-from django.shortcuts import render
+from django.views.generic import ListView
 
-# Create your views here.
+from .models import Vacancy
+
+
+class VacancyListView(ListView):
+    model = Vacancy
+
+    template_name = 'scraping/vacancies.html'
+    context_object_name = 'vacancies'
