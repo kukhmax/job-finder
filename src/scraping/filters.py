@@ -9,13 +9,15 @@ class VacancyFilter(FilterSet):
 
     location = ModelChoiceFilter(
         queryset=Location.objects.all(),
-        to_field_name='name',
+        to_field_name='pk',
         label='Location',
+        empty_label='--- Choose location ---',        
     )
     language = ModelChoiceFilter(
         queryset=Language.objects.all(),
-        to_field_name='name',
+        to_field_name='pk',
         label='Language',
+        empty_label='--- Choose a programming language ---',
     )
 
     class Meta:
