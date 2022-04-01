@@ -2,6 +2,14 @@ from django.db import models
 from django.utils.text import slugify
 from django.urls import reverse
 
+def default_urls():
+    return {
+        'indeed': '',
+        'olx': '',
+        'from_jooble': '',
+        'nofluffojbs': ''
+    }
+
 class Location(models.Model):
     name = models.CharField(max_length=100, unique=True)
     slug = models.SlugField(max_length=100, null=True, unique=True)
@@ -45,3 +53,17 @@ class Vacancy(models.Model):
         verbose_name = 'Vacancy'
         verbose_name_plural = 'Vacancies'
         ordering = ['-timestamp']
+
+
+class Error(models.Model):
+    timestamp = models.DateField(auto_now_add=True)
+    data = models.JSONField()
+
+
+class Url(models.Model):
+    location = models.ForeignKey('Location', on_delete=models.CASCADE, verbose_name='Location')
+    language = models.ForeignKey('Language', on_delete=models.CASCADE, verbose_name='Language')
+    data = models.JSONField(default=default_urls)
+
+    class Meta:
+        unique_together = ('location', 'language')  # два параметра вместе уникальны

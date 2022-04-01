@@ -1,6 +1,6 @@
 from django.contrib import admin
 
-from .models import Language, Location, Vacancy
+from .models import Language, Location, Vacancy, Error, Url
 
 
 class LocationAdmin(admin.ModelAdmin):
@@ -22,3 +22,5 @@ class VacancyAdmin(admin.ModelAdmin):
 admin.site.register(Location, LocationAdmin)
 admin.site.register(Language, LanguageAdmin)
 admin.site.register(Vacancy, VacancyAdmin)
+admin.site.register(Error)
+admin.site.register(Url)

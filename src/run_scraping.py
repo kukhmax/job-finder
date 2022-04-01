@@ -15,7 +15,7 @@ import django
 django.setup()
 
 
-from scraping.models import Language, Location, Vacancy
+from scraping.models import Language, Location, Vacancy, Error
 from scraping.parser import *
 from django.db import DatabaseError
 
@@ -41,6 +41,8 @@ for job in jobs:
         v.save()
     except DatabaseError:
         pass
+if errors:
+    er = Error(data=errors).save()
 
 # with open('work.json', 'w') as f:
 #         f.write(str(jobs))

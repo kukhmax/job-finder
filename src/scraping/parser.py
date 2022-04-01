@@ -153,8 +153,8 @@ def get_vac_from_nofluffjobs(url, city=None, language=None):
 
         
 
-if __name__ == '__main__':
-    url = 'https://nofluffjobs.com/pl/praca-it/warszawa/backend?criteria=seniority%3Djunior%20requirement%3Dpython&page=1'
-    jobs, errors = get_vac_from_nofluffjobs(url)
-    with codecs.open('work.json', 'w', 'utf-8') as f:
-        f.write(str(jobs))
+# if __name__ == '__main__':
+#     url = 'https://nofluffjobs.com/pl/praca-it/warszawa/backend?criteria=seniority%3Djunior%20requirement%3Dpython&page=1'
+#     jobs, errors = get_vac_from_nofluffjobs(url)
+#     with codecs.open('work.json', 'w', 'utf-8') as f:
+#         f.write(str(jobs))
