@@ -19,101 +19,122 @@ headers = {
 }
 
 
-def get_vac_from_indeed(url):
+def get_vac_from_indeed(url, location=None, language=None):
     # url = 'https://pl.indeed.com/jobs?q=python%20junior&l=Warszawa%2C%20mazowieckie&vjk=e9f46c76587e2d7b'
     jobs = []
     errors = []
 
     domain = 'https://pl.indeed.com'
-    resp = requests.get(url, headers=headers)
+    if url:
+        resp = requests.get(url, headers=headers)
 
-    if resp.status_code == 200:
-        soup = BS(resp.content, 'html.parser')
-        main_div = soup.find('div', id='mosaic-provider-jobcards')
-        if main_div:
-            div_lst = main_div.find_all('a', attrs={'class': 'resultWithShelf'})
-        # print(soup)
-            for d in div_lst:
-                title = d.find('h2').text
-                if 'nowa oferta' in title:
-                    title = d.find('h2').text[:11] + ' (new)'
-                
-                href = domain + d['href']
-                description = d.find('div', attrs={'class': 'job-snippet'}).text
-                city = d.find('div', attrs={'class': 'companyLocation'}).text
-                company = d.find('span', attrs={'class': 'companyName'}).text
+        if resp.status_code == 200:
+            soup = BS(resp.content, 'html.parser')
+            main_div = soup.find('div', id='mosaic-provider-jobcards')
+            if main_div:
+                div_lst = main_div.find_all('a', attrs={'class': 'resultWithShelf'})
+            # print(soup)
+                for d in div_lst:
+                    title = d.find('h2').text
+                    if 'nowa oferta' in title:
+                        title = d.find('h2').text[:11] + ' (new)'
+                    
+                    href = domain + d['href']
+                    description = d.find('div', attrs={'class': 'job-snippet'}).text
+                    city = d.find('div', attrs={'class': 'companyLocation'}).text
+                    company = d.find('span', attrs={'class': 'companyName'}).text
 
-                jobs.append(
-                    {'title': title, 'url': href, 'description': description, 'city': city, 'company': company}
-                )
+                    jobs.append({
+                        'title': title,
+                        'url': href,
+                        'description': description,
+                        'city': city,
+                        'company': company,
+                        'location_id': location,
+                        'language_id': language,
+                    })
+            else:
+                errors.append({'url': url, 'title': 'Main div does not exitst'})
         else:
-            errors.append({'url': url, 'title': 'Main div does not exitst'})
-    else:
-        errors.append({'url': url, 'title': 'Page not response'})
+            errors.append({'url': url, 'title': 'Page not response'})
     return jobs, errors
 
 
 
-def get_vac_from_olx(url):
+def get_vac_from_olx(url, location=None, language=None):
     # url = 'https://www.olx.pl/praca/informatyka/warszawa/q-python/'
     jobs = []
     errors = []
-    resp = requests.get(url, headers=headers)
+    if url:
+        resp = requests.get(url, headers=headers)
 
-    if resp.status_code == 200:
-        soup = BS(resp.content, 'html.parser')
-        table = soup.find('table', id='offers_table')
-        if table:
-            tr_lst = table.find_all('tr', attrs={'class': 'wrap'})
-        # print(soup)
-            for div in tr_lst:
-                title = div.find('h3').text
-                
-                href = div.a['href']
-                description = div.find('span', attrs={'class': 'price-label'}).text
-                city = div.find('small', attrs={'class': 'breadcrumb'}).text
+        if resp.status_code == 200:
+            soup = BS(resp.content, 'html.parser')
+            table = soup.find('table', id='offers_table')
+            if table:
+                tr_lst = table.find_all('tr', attrs={'class': 'wrap'})
+            # print(soup)
+                for div in tr_lst:
+                    title = div.find('h3').text
+                    
+                    href = div.a['href']
+                    description = div.find('span', attrs={'class': 'price-label'}).text
+                    city = div.find('small', attrs={'class': 'breadcrumb'}).text
 
-                jobs.append(
-                    {'title': title, 'url': href, 'description': description, 'city': city, 'company': 'no name'}
-                )
+                    jobs.append({
+                        'title': title,
+                        'url': href,
+                        'description': description,
+                        'city': city,
+                        'company': 'no name',
+                        'location_id': location,
+                        'language_id': language,
+                    })
+            else:
+                errors.append({'url': url, 'title': 'Table does not exitst'})
         else:
-            errors.append({'url': url, 'title': 'Table does not exitst'})
-    else:
-        errors.append({'url': url, 'title': 'Page not response'})
+            errors.append({'url': url, 'title': 'Page not response'})
     return jobs, errors
 
 
-def get_vac_from_jooble(url):
+def get_vac_from_jooble(url, location=None, language=None):
     # url = 'https://pl.jooble.org/SearchResult?date=3&rgns=Warszawa&ukw=junior%20python'
     jobs = []
     errors = []
-    resp = requests.get(url, headers=headers)
+    if url:
+        resp = requests.get(url, headers=headers)
 
-    if resp.status_code == 200:
-        soup = BS(resp.content, 'html.parser')
-        main_div = soup.find('div', attrs={'class': 'infinite-scroll-component'})
-        if main_div:
-            articles = main_div.find_all('article', id=True)
+        if resp.status_code == 200:
+            soup = BS(resp.content, 'html.parser')
+            main_div = soup.find('div', attrs={'class': 'infinite-scroll-component'})
+            if main_div:
+                articles = main_div.find_all('article', id=True)
 
-            for art in articles:
-                title = art.find('h2').text
-                
-                href = art.a['href']
-                description = art.find('div', attrs={'class': '_037ff'}).text
-                city = art.find('div', attrs={'class': '_88a24'}).text
-                company = art.find('p', attrs={'class': 'e2601'}).text
+                for art in articles:
+                    title = art.find('h2').text
+                    
+                    href = art.a['href']
+                    description = art.find('div', attrs={'class': '_037ff'}).text
+                    city = art.find('div', attrs={'class': '_88a24'}).text
+                    company = art.find('p', attrs={'class': 'e2601'}).text
 
-                jobs.append(
-                    {'title': title, 'url': href, 'description': description, 'city': city, 'company': company}
-                )
+                    jobs.append({
+                        'title': title,
+                        'url': href,
+                        'description': description,
+                        'city': city,
+                        'company': company,
+                        'location_id': location,
+                        'language_id': language,
+                    })
+            else:
+                errors.append({'url': url, 'title': 'Main div does not exitst'})
         else:
-            errors.append({'url': url, 'title': 'Main div does not exitst'})
-    else:
-        errors.append({'url': url, 'title': 'Page not response'})
+            errors.append({'url': url, 'title': 'Page not response'})
     return jobs, errors
 
 
-def get_vac_from_nofluffjobs(url, city=None, language=None):
+def get_vac_from_nofluffjobs(url, location=None, language=None):
     domain = 'https://nofluffjobs.com'
 
     jobs = []
@@ -136,8 +157,8 @@ def get_vac_from_nofluffjobs(url, city=None, language=None):
                         'url': domain + href,
                         'description': description.text,
                         'company': company.text,
-                        # 'city_id': city,
-                        # 'language_id': language,
+                        'location_id': location,
+                        'language_id': language,
                     })
             else:
                 errors.append({

@@ -6,8 +6,8 @@ def default_urls():
     return {
         'indeed': '',
         'olx': '',
-        'from_jooble': '',
-        'nofluffojbs': ''
+        'jooble': '',
+        'nofluffjobs': ''
     }
 
 class Location(models.Model):
