@@ -17,15 +17,16 @@ class VacancyFindView(FilterView):
 
 
 
-# class VacancyListView(ListView):
-#     """List of found vacanies"""
-#     model = Vacancy
-#     filterset_class =  VacancyFilter
+class VacancyListView(FilterView, ListView):
+    """List of found vacanies"""
+    model = Vacancy
+    filterset_class =  VacancyFilter
 
-#     template_name = 'scraping/vacancies.html'
-#     context_object_name = 'filter'
+    template_name = 'scraping/vacancies.html'
+    context_object_name = 'filter'
+    paginate_by = 15
 
 
-def vacancy_list(request):
-    f = VacancyFilter(request.GET, queryset=Vacancy.objects.all())
-    return render(request, 'scraping/vacancies.html', {'filter': f})
+# def vacancy_list(request):
+#     f = VacancyFilter(request.GET, queryset=Vacancy.objects.all())
+#     return render(request, 'scraping/vacancies.html', {'filter': f})
