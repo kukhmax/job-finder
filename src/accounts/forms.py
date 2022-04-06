@@ -1,5 +1,7 @@
 from django import forms
 from .models import MyUser
+from scraping.models import Location, Language
+
 
 from django.contrib.auth.forms import AuthenticationForm, UsernameField
 
@@ -38,3 +40,28 @@ class LoginForm(AuthenticationForm):
         strip=False,
         widget=forms.PasswordInput(attrs={"autocomplete": "current-password", 'class': 'form-control'}),
     )
+
+
+# class VacancyFindForm(forms.Form):
+#     """A form for selecting vacancies by
+#     location and programming language """
+#     location = forms.ModelChoiceField(
+#         queryset=Location.objects.all(),
+#         label='Location',
+#         to_field_name='name',
+#         required=True,
+#         widget=forms.Select(attrs={'class': 'form-control'})
+#     )
+#     language = forms.ModelChoiceField(
+#         queryset=Language.objects.all(),
+#         to_field_name='name',
+#         required=True,
+#         widget=forms.Select(attrs={'class': 'form-control'}),
+#         label='Language',
+#     )
+#     send_email = forms.BooleanField(required=False, widget=forms.CheckboxInput,
+#                                     label='Send email')
+
+#     class Meta:
+#         model = MyUser
+#         fields = ('location', 'language', 'send_email')

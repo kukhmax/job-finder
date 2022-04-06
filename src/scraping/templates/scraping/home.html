@@ -17,9 +17,11 @@
         <form class="form-inline center" method="get" action="{% url 'vacancies' %}">
             {% bootstrap_field filter.form.location field_class='ml-2 mr-3' %}
             {% bootstrap_field filter.form.language field_class='mr-3 ml-2' %}
-            <div class="form-group">
+            
+            <div class="d-grid gap-2">
                 <input class="btn btn-primary my-3" type="submit" value="Show">
             </div>
+            
         </form>
     </div>
 </div>

@@ -1,10 +1,11 @@
+from django.contrib.auth.mixins import LoginRequiredMixin
 from django.contrib.auth.views import LoginView, LogoutView
 from django.contrib.messages.views import SuccessMessageMixin
 from django.urls import reverse_lazy
-from django.views.generic import CreateView
+from django.views.generic import CreateView, UpdateView, DeleteView
 from django.views.generic.base import TemplateView
-from django.contrib.auth.models import User
-from .forms import UserRegistrationForm, LoginForm
+
+from .forms import LoginForm, UserRegistrationForm
 from .models import MyUser
 
 
@@ -37,3 +38,15 @@ class LogoutUserView(SuccessMessageMixin, LogoutView):
 class SuccessRegistrationView(TemplateView):
     template_name = 'accounts/success_register.html'
 
+
+class SettingsUpdateView(LoginRequiredMixin, UpdateView):
+    model = MyUser
+    fields = ['location', 'language', 'send_email']
+    template_name = 'accounts/update_settings.html'
+    success_url = reverse_lazy('success_reg')
+
+
+class UserDeleteView(LoginRequiredMixin, DeleteView):
+    
+    model = MyUser
+    success_url = reverse_lazy('home')
