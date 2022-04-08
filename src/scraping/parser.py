@@ -78,7 +78,7 @@ def get_vac_from_olx(url, location=None, language=None):
                     title = div.find('h3').text
                     
                     href = div.a['href']
-                    description = div.find('span', attrs={'class': 'price-label'}).text
+                    description = div.find('span', attrs={'class': 'price-label'})
                     city = div.find('small', attrs={'class': 'breadcrumb'}).text
 
                     jobs.append({

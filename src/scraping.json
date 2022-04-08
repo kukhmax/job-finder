@@ -1,0 +1,98 @@
+[
+{
+    "model": "scraping.location",
+    "pk": 1,
+    "fields": {
+        "name": "Warsaw",
+        "slug": "warsaw"
+    }
+},
+{
+    "model": "scraping.location",
+    "pk": 2,
+    "fields": {
+        "name": "Poland",
+        "slug": "poland"
+    }
+},
+{
+    "model": "scraping.location",
+    "pk": 3,
+    "fields": {
+        "name": "Krakow",
+        "slug": "krakow"
+    }
+},
+{
+    "model": "scraping.language",
+    "pk": 1,
+    "fields": {
+        "name": "Python",
+        "slug": "python"
+    }
+},
+{
+    "model": "scraping.language",
+    "pk": 2,
+    "fields": {
+        "name": "Java",
+        "slug": "java"
+    }
+},
+{
+    "model": "scraping.vacancy",
+    "pk": 1,
+    "fields": {
+        "url": "https://www.pracuj.pl/praca/python-developer-warszawa,oferta,1001621693?sort=0&s=6d8812f1",
+        "city": "Warszawa",
+        "title": "Python Developer",
+        "company": "CPL Jobs .",
+        "description": "Your profile:\r\n\r\n    3+ years of experience with Python programming language\r\n    Experience in developing web applications \r\n    Experience with version control systems, preferably Git\r\n    Experience in designing and developing REST APIs\r\n    Knowledge of Docker\r\n    Experience with PostgreSQL or MySQL\r\n    Very good English communication skills (B2+)\r\n    Nice to have: experience with AWS, Kubernetes",
+        "location": 1,
+        "language": 1,
+        "timestamp": "2022-03-18"
+    }
+},
+{
+    "model": "scraping.vacancy",
+    "pk": 2,
+    "fields": {
+        "url": "https://www.praca.pl/python-developer_6597024.html#9718b3b0cde609fc930fcb1d02ade2c1",
+        "city": "Warszawa",
+        "title": "Python Developer",
+        "company": "LeverX Group",
+        "description": "Need to have:\r\n\r\n    Strong Python development skills;\r\n    Knowledge of Django framework;\r\n    Database experience including MySQL and/or PostgreSQL (queries, design);\r\n    Strong understanding of software programming best practices, data structures, algorithms, databases, and networks;\r\n    English (intermediate, upper-intermediate or higher).",
+        "location": 2,
+        "language": 1,
+        "timestamp": "2022-03-18"
+    }
+},
+{
+    "model": "scraping.vacancy",
+    "pk": 3,
+    "fields": {
+        "url": "https://www.linkedin.com/jobs/view/2949788924/?alternateChannel=search&refId=TWY%2Fz4i6I6A6YLmLCC71tg%3D%3D&trackingId=P%2BGbQTocyy8QLWYHH2N6uQ%3D%3D",
+        "city": "Krakow",
+        "title": "Django developer",
+        "company": "Google",
+        "description": "Hello, World!!!!!!!!!!!!!!!",
+        "location": 2,
+        "language": 1,
+        "timestamp": "2022-03-19"
+    }
+},
+{
+    "model": "scraping.vacancy",
+    "pk": 4,
+    "fields": {
+        "url": "https://www.linkedin.com/jobs/",
+        "city": "Krakow",
+        "title": "job",
+        "company": "kow",
+        "description": "adaafa",
+        "location": 3,
+        "language": 2,
+        "timestamp": "2022-03-23"
+    }
+}
+]
