@@ -25,10 +25,10 @@
                 </div>
             
             </form>
-            <form method="POST">
+            <form method="POST" action="{% url 'accounts:delete' user.pk %}">
                 {% csrf_token %}
                 <div class="d-grid gap-2">
-                    <button type="submit" class="btn btn-danger my-2" action="{% url 'accounts:delete' ">Delete</button>
+                    <button type="submit" class="btn btn-danger my-2">Delete</button>
                 </div>
             
             </form>

@@ -1,5 +1,7 @@
-from django.contrib.auth.models import AbstractBaseUser, BaseUserManager
 from django.db import models
+from django.contrib.auth.models import (
+    BaseUserManager, AbstractBaseUser
+)
 
 
 class MyUserManager(BaseUserManager):
@@ -34,23 +36,13 @@ class MyUserManager(BaseUserManager):
 
 
 class MyUser(AbstractBaseUser):
-    """Переопределяем модель User"""
     email = models.EmailField(
         verbose_name='email address',
         max_length=255,
         unique=True,
     )
-    
     is_active = models.BooleanField(default=True)
     is_admin = models.BooleanField(default=False)
-    location = models.ForeignKey(
-        'scraping.Location', on_delete=models.SET_NULL, null=True, blank=True,
-    )
-    language = models.ForeignKey(
-        'scraping.Language', on_delete=models.SET_NULL, null=True, blank=True,
-    )
-    send_email = models.BooleanField(default=False)    
-
 
     objects = MyUserManager()
 

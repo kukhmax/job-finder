@@ -40,7 +40,7 @@ class SuccessRegistrationView(TemplateView):
     template_name = 'accounts/success_register.html'
 
 
-class SettingsUpdateView(LoginRequiredMixin, UpdateView):
+class SettingsUpdateView(LoginRequiredMixin, UpdateView, Permis):
     model = MyUser
     fields = ['location', 'language', 'send_email']
     template_name = 'accounts/update_settings.html'

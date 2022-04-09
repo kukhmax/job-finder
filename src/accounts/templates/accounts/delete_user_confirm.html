@@ -5,9 +5,9 @@
 {% block content %}
 <div class="container wrapper flex-grow-1">
 <h1 class="my-4">Delete user</h1>
-<p>{% trans 'Are you sure that you want to delete ' %} <b>{{ user.email }}</b>?</p>
-<form method="post">
+<p>'Are you sure that you want to delete<b>{{ user.email }}</b>?</p>
+<form method="post" action="{% url 'accounts:delete' user.pk %}">
     {% csrf_token %}
-    <button type="submit" class="btn btn-danger">{% trans 'Yes, delete' %}</button>
+    <button type="submit" class="btn btn-danger">Yes, delete</button>
 </form>
 {% endblock content %}

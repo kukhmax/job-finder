@@ -1,10 +1,11 @@
-from accounts.models import MyUser
 from django import forms
 from django.contrib import admin
+from django.contrib.auth.models import Group
 from django.contrib.auth.admin import UserAdmin as BaseUserAdmin
 from django.contrib.auth.forms import ReadOnlyPasswordHashField
-from django.contrib.auth.models import Group
 from django.core.exceptions import ValidationError
+
+from .models import MyUser
 
 
 class UserCreationForm(forms.ModelForm):
@@ -54,11 +55,11 @@ class UserAdmin(BaseUserAdmin):
     # The fields to be used in displaying the User model.
     # These override the definitions on the base UserAdmin
     # that reference specific fields on auth.User.
-    list_display = ('email', 'is_admin', 'language', 'location', 'send_email')  # поля в админке у юзера
+    list_display = ('email', 'is_admin')
     list_filter = ('is_admin',)
     fieldsets = (
         (None, {'fields': ('email', 'password')}),
-        ('Settings', {'fields': ('language', 'location', 'send_email')}),
+        ('settings', {'fields': ('language', 'city', 'send_email',)}),
         ('Permissions', {'fields': ('is_admin',)}),
     )
     # add_fieldsets is not a standard ModelAdmin attribute. UserAdmin
