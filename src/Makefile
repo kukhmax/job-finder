@@ -15,3 +15,6 @@ messages:
 
 compile:
 	$(MANAGE) compilemessages --ignore=cache --ignore=.venv/*/locale
+
+superuser:
+	$(MANAGE) createsuperuser

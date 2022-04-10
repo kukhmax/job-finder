@@ -1,3 +1,4 @@
+from django.contrib.auth import authenticate, get_user_model
 from django.contrib.auth.mixins import LoginRequiredMixin
 from django.contrib.auth.views import LoginView, LogoutView
 from django.contrib.messages.views import SuccessMessageMixin
@@ -6,17 +7,21 @@ from django.utils.translation import gettext as _
 from django.views.generic import CreateView, DeleteView, UpdateView
 from django.views.generic.base import TemplateView
 
-from .forms import LoginForm, UserRegistrationForm
+from .forms import LoginForm, UserCreationForm
 from .models import MyUser
+
+
+User = get_user_model()
 
 
 class UserCreateView(SuccessMessageMixin, CreateView):
     """View for create user."""
 
-    model = MyUser
+    model = User
+    form_class = UserCreationForm
     success_url = reverse_lazy('accounts:success_reg')
     template_name = 'accounts/register.html'
-    form_class = UserRegistrationForm
+    
     success_message = 'User successfully registered'
 
 
@@ -40,7 +45,7 @@ class SuccessRegistrationView(TemplateView):
     template_name = 'accounts/success_register.html'
 
 
-class SettingsUpdateView(LoginRequiredMixin, UpdateView, Permis):
+class SettingsUpdateView(LoginRequiredMixin, UpdateView):
     model = MyUser
     fields = ['location', 'language', 'send_email']
     template_name = 'accounts/update_settings.html'
