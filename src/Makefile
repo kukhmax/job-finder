@@ -18,3 +18,6 @@ compile:
 
 superuser:
 	$(MANAGE) createsuperuser
+
+lint:
+	flake8

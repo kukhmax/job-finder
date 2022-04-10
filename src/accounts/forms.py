@@ -1,7 +1,7 @@
 from django import forms
 from django.contrib.auth import get_user_model
 from django.contrib.auth.forms import AuthenticationForm, UsernameField
-from scraping.models import Language, Location
+# from scraping.models import Language, Location
 from django.core.exceptions import ValidationError
 
 from .models import MyUser

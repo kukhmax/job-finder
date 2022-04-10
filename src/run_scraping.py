@@ -1,5 +1,5 @@
 '''решение как запустить сторонний файл с django
-https://stackoverflow.com/questions/42813453/how-to-run-django-setup-properly-from-within-a-stand-alone-python-file-inside'''
+https://stackoverflow.com/questions/42813453/how-to-run-django-setup-properly-from-within-a-stand-alone-python-file-inside'''  # noqa E501
 
 import os
 import sys
@@ -7,20 +7,21 @@ import asyncio
 
 proj = os.path.dirname(os.path.abspath('manage.py'))
 sys.path.append(proj)
-# os.environ.setdefault("DJANGO_SETTINGS_MODULE", "myproject.settings") tried as well
+# os.environ.setdefault("DJANGO_SETTINGS_MODULE",
+#  "myproject.settings") tried as well
 os.environ["DJANGO_SETTINGS_MODULE"] = "job_finder.settings"
 
-import django
+import django  # noqa E402
 django.setup()
 
 
-from django.db import DatabaseError
-from django.contrib.auth import get_user_model
+from django.db import DatabaseError  # noqa E402
+from django.contrib.auth import get_user_model  # noqa E402
 
-from scraping.models import Error, Language, Location, Vacancy, Url
-from scraping.parser import *
+from scraping.models import Error, Vacancy, Url  # noqa E402
+from scraping.parser import *  # noqa E402, E403
 
-User = get_user_model()  # вернет пользователя, который есть в настройках джанго проекта: AUTH_USER_MODEL = 'accounts.MyUser'
+User = get_user_model()  # вернет пользователя, который есть в настройках джанго проекта: AUTH_USER_MODEL = 'accounts.MyUser'  # noqa E501
 
 parsers = (
     (get_vac_from_indeed, 'indeed'),
@@ -76,7 +77,12 @@ urls = get_urls(settings)
 loop = asyncio.get_event_loop()
 # создаем список задач
 tmp_tasks = [
-    (func, url_data['url_data'][key], url_data['location'], url_data['language'])
+    (
+        func,
+        url_data['url_data'][key],
+        url_data['location'],
+        url_data['language'],
+    )
     for url_data in urls
     for func, key in parsers
 ]
