@@ -22,7 +22,7 @@ class UserCreateView(SuccessMessageMixin, CreateView):
     success_url = reverse_lazy('accounts:success_reg')
     template_name = 'accounts/register.html'
     
-    success_message = 'User successfully registered'
+    success_message = _('User successfully registered')
 
 
 class LoginUserView(SuccessMessageMixin, LoginView):
@@ -30,7 +30,7 @@ class LoginUserView(SuccessMessageMixin, LoginView):
 
     template_name = 'accounts/login.html'
     next_page = reverse_lazy('scraping:home')
-    success_message = 'You are logged in'
+    success_message = _('You are logged in')
     form_class = LoginForm
 
 
@@ -45,14 +45,17 @@ class SuccessRegistrationView(TemplateView):
     template_name = 'accounts/success_register.html'
 
 
-class SettingsUpdateView(LoginRequiredMixin, UpdateView):
+class SettingsUpdateView(SuccessMessageMixin, LoginRequiredMixin, UpdateView):
+    """View for update user settings"""
     model = MyUser
     fields = ['location', 'language', 'send_email']
     template_name = 'accounts/update_settings.html'
     success_url = reverse_lazy('scraping:home')
+    success_message = _('User successfully updated')
 
 
-class UserDeleteView(LoginRequiredMixin, DeleteView):
+
+class UserDeleteView(SuccessMessageMixin, LoginRequiredMixin, DeleteView):
     
     model = MyUser
     success_url = reverse_lazy('scraping:home')
