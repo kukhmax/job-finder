@@ -9,13 +9,15 @@
 
 
 {% if page_obj %}
+
+<h3 id="h3" class="my-4 text-center">Results as per your request</h3>
     
 {% for v in page_obj %}
 
 <div class="card border-secondary col-md-8 mx-auto text-center my-3">
     <div class="card-header text-white bg-dark">
-        <h5>{{ v.title}}</h5>
-    </div>
+        <h5 style="font-family: WendyOne;">{{ v.title}}</h5>
+    </div> 
     <div class="card-body text-dark bg-light">
         <p><b>{{ v.company }}</b></p>
         <p><small class="text-muted"></small></p>
