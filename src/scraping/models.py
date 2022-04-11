@@ -59,6 +59,9 @@ class Error(models.Model):
     timestamp = models.DateField(auto_now_add=True)
     data = models.JSONField()
 
+    def __str__(self):
+        return str(self.timestamp)
+
 
 class Url(models.Model):
     location = models.ForeignKey('Location', on_delete=models.CASCADE, verbose_name='Location')

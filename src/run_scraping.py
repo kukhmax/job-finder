@@ -4,6 +4,7 @@ https://stackoverflow.com/questions/42813453/how-to-run-django-setup-properly-fr
 import os
 import sys
 import asyncio
+import datetime as dt
 
 proj = os.path.dirname(os.path.abspath('manage.py'))
 sys.path.append(proj)
@@ -50,11 +51,12 @@ def get_urls(_settings):
     url_dict = {(q['location_id'], q['language_id']): q['data'] for q in qs}
     urls = []
     for pair in _settings:
-        tmp = {}
-        tmp['location'] = pair[0]
-        tmp['language'] = pair[1]
-        tmp['url_data'] = url_dict[pair]
-        urls.append(tmp)
+        if pair in url_dict:
+            tmp = {}
+            tmp['location'] = pair[0]
+            tmp['language'] = pair[1]
+            tmp['url_data'] = url_dict[pair]
+            urls.append(tmp)
     return urls
 
 
@@ -107,7 +109,17 @@ for job in jobs:
     except DatabaseError:
         pass
 if errors:
-    er = Error(data=errors).save()
+    qs = Error.objects.filter(timestamp=dt.date.today())
+    if qs.exists():
+        err = qs.first()
+        err.data.update({'errors': errors})
+        err.save()
+    else:
+        er = Error(data=f'errors: {errors}').save()
 
 # with open('work.json', 'w') as f:
 #         f.write(str(jobs))
+
+
+ten_days_ago =  dt.date.today() - dt.timedelta(10)
+Vacancy.objects.filter(timestamp__lte=ten_days_ago).delete()

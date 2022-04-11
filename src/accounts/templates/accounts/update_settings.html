@@ -13,7 +13,7 @@
         <div class="col-md-6 mx-auto">
             <div class="card-body bg-light">
             <h4 class="my-2 text-center">Your settings</h4>
-            <form method="POST">
+            <form method="POST" action="">
                 {% csrf_token %}
                 <div class="form-group">
                     {% bootstrap_field form.location field_class='ml-2 mr-3' %}
@@ -32,6 +32,39 @@
                 </div>
             
             </form>
+            
+        </div>
+        </div>
+    </div>
+    <div class="row my-5">
+        <div class="col-md-6 mx-auto">
+            <div class="card-body bg-light">
+            <p class="my-2 text-center">If you have not found a suitable set: 
+                <b>location and programming language</b>, you can fill out the form below with your wishes.
+                After the necessary data is added, you will receive an email.</p>
+
+                <p>
+                    <div class="d-grid gap-2">
+                    <button class="btn btn-success" type="button" data-bs-toggle="collapse" data-bs-target="#collapseExample" aria-expanded="false" aria-controls="collapseExample">
+                      Show form
+                    </button>
+                </div>
+                  </p>
+                  <div class="collapse" id="collapseExample">
+                    <div class="card card-body">
+                        <form method="POST" action="{% url 'accounts:contact' %}">
+                            {% csrf_token %}
+                            <div class="form-group">
+                                {{ contact_form.as_p }}
+                            </div>
+                            <div class="d-grid gap-2">
+                                <button type="submit" class="btn btn-info my-2">Send</button>
+                            </div>
+                        </form>
+                    </div>
+                  </div>
+
+           
         </div>
         </div>
     </div>

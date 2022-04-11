@@ -1,15 +1,20 @@
+import datetime as dt
+
+from django.contrib import messages
 from django.contrib.auth import get_user_model
 from django.contrib.auth.mixins import LoginRequiredMixin
 from django.contrib.auth.views import LoginView, LogoutView
 from django.contrib.messages.views import SuccessMessageMixin
+from django.shortcuts import redirect
 from django.urls import reverse_lazy
 from django.utils.translation import gettext as _
 from django.views.generic import CreateView, DeleteView, UpdateView
 from django.views.generic.base import TemplateView
+from django.views.generic.edit import FormView
+from scraping.models import Error
 
-from .forms import LoginForm, UserCreationForm
+from .forms import ContactForm, LoginForm, UserCreationForm
 from .models import MyUser
-
 
 User = get_user_model()
 
@@ -52,6 +57,13 @@ class SettingsUpdateView(SuccessMessageMixin, LoginRequiredMixin, UpdateView):
     template_name = 'accounts/update_settings.html'
     success_url = reverse_lazy('scraping:home')
     success_message = _('User successfully updated')
+    
+   
+    def get_context_data(self, **kwargs):
+        contact_form = ContactForm()
+        context = super().get_context_data(**kwargs)
+        context['contact_form'] = contact_form
+        return context
 
 
 
@@ -67,3 +79,41 @@ class UserDeleteView(SuccessMessageMixin, LoginRequiredMixin, DeleteView):
     deletion_error_message = _(
         'Cannot delete user because it is in use',
     )
+
+def contact(request):
+    if request.method == 'POST':
+        contact_form = ContactForm(request.POST or None)
+        if contact_form.is_valid():
+            data = contact_form.cleaned_data
+            location = data.get('location')
+            language = data.get('language')
+            email = data.get('email')
+            qs = Error.objects.filter(timestamp=dt.date.today())
+            if qs.exists():
+                err = qs.first()
+                data = err.data.get('user_data', [])
+                data.append({'location': location, 'language': language, 'email': email})
+                err.data['user_data'] = data
+                err.save()
+            else:
+                data = {'user_data': [{'location': location, 'language': language, 'email': email}]}
+                Error(data=data).save()
+            messages.success(request, 'Your data sent to administrator')
+            return redirect('scraping:home')
+        else:
+            return redirect('accounts:update')
+    else:
+        return redirect('accounts:login')
+                
+
+
+# class ContactFormView(FormView):
+#     template_name = 'contact.html'
+#     form_class = ContactForm
+#     success_url = 'accounts:home'
+
+#     def form_valid(self, form):
+#         # This method is called when valid form data has been POSTed.
+#         # It should return an HttpResponse.
+#         form.send_email()
+#         return super().form_valid(form)
