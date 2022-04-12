@@ -1,1 +1,1 @@
-web: gunicorn job_finder.wsgi
+web: gunicorn job_finder.wsgi --log-file -
