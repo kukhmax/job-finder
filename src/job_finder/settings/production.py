@@ -14,7 +14,6 @@ import os
 from pathlib import Path
 
 import dj_database_url
-import django_heroku
 
 EMAIL_HOST = os.getenv("EMAIL_HOST")
 EMAIL_PORT = os.getenv("EMAIL_PORT")
@@ -105,12 +104,8 @@ DATABASES = {
 }
 
 
-django_heroku.settings(locals())
-
-database_config = dj_database_url.config(
-    conn_max_age=django_heroku.MAX_CONN_AGE,
-    ssl_require=False,
-)
+db = dj_database_url.config()
+DATABASES['default'].update(db)
 
 # Password validation
 # https://docs.djangoproject.com/en/4.0/ref/settings/#auth-password-validators
